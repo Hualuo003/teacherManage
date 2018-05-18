@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta charset="utf-8">
+    <title>考试后台管理系统</title>
+    <script src="./js/jquery-3.3.1.min.js"></script>	<!--ajax所在的js包-->
+    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.css">
+ 	<link rel="stylesheet" type="text/css" href="./bootstrap/bootstrap.min.css">
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="./js/jquery.js"></script>
+	 
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="./js/jquery.dataTables.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/handlebars-v3.0.1.js"></script>
+	<!--css-->   	
+    <style>
+    table {
+        *border-collapse: collapse;
+        border-spacing: 0;
+        width: 80%;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        table-layout: fixed;
+    }
+
+    h1{
+    	font-family: "微软雅黑";
+    	font-size: 24px;
+    	color: blue;
+    }
+    
+    h2{
+    	font-family: "宋体";
+    	font-size: 18px;
+    	color: black;
+    }
+    
+    button{
+    	background: gray;
+    	height: 36px;
+    	width: 80px;
+    }
+    
+    a{
+    	font-family: "宋体";
+    	font-size: 18px;
+    	color: darkblue;
+    }
+    </style>
+
+</head>
+	<center>
+		<body>
+		    </div>
+		        <div>
+		            <div>
+		                <div>
+		                    <div>
+		                        <h1>教师管理</h1>
+		                    </div>
+		                </div>
+		                <div>
+		                    <div>
+		                        <div>
+		                            <div>
+		                                <h2>添加教师</h2>
+		                            </div>
+		                            <div>
+		                                <form>
+		                                    <div>
+		                                        <label>工号</label>
+		                                        <div>
+		                                            <input type="text" placeholder="工号" id="tc_id">
+		                                        </div>
+		                                    </div>
+		                                    <div>
+		                                        <label>姓名</label>
+		                                        <div>
+		                                            <input type="text" placeholder="姓名" id="tc_name">
+		                                        </div>
+		                                    </div>
+		                                    <div>
+		                                        <label>密码</label>
+		                                        <div>
+		                                            <input type="text" id="tc_password" placeholder="密码">
+		                                        </div>
+		                                    </div>
+		                                    <div>
+		                                        <label>权限</label>
+		                                        <div>
+		                                            <select id="tc_level">
+		                                                <option value="管理员">管理员</option>
+		                                                <option value="教师">教师</option>
+		                                            </select>	                              
+				                                    <div>
+				                                    	<br/>
+				                                        <button type="button" onclick="AddTeacher()" id="add_teacher"><a>添加</a></button>			                                      
+	                                    			</div>
+		                                    </div>
+		                                </form>
+		                                <br/>
+		                            </div>
+		                        </div>
+		                    </div>		                   		               
+		                    
+		                    <div>
+		                        <div>
+		                            <div>
+		                                <h2>教师详情</h2>	                               
+		                            </div>
+		                            <div>
+		                                <div>
+		                                    <table id="table" class="display">
+		                                    	<thead>
+		                                    		<tr>
+			                                            <th>工号</th>
+			                                            <th>姓名</th>
+			                                            <th>密码</th>
+			                                            <th>权限</th>
+			                                            <th>操作</th>
+			                                        </tr>
+		                                    	</thead>
+		                                    	
+			                                    <tbody>
+			                                      
+			                                    </tbody>
+		                                    </table>
+		                                </div>
+		                                
+		                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+															&times;
+														</button>
+														<h4 class="modal-title" id="myModalLabel">
+															修改教师信息
+														</h4>
+													</div>
+													
+													<div class="modal-body">
+														<fieldset >														<!--框架式结构-->
+															<br/>														<!--换行-->
+															<!--<legend>修改教师信息</legend>										<!--框架名称-->
+															<label for="num">工号：</label>						<!--用户名标签，关联文本输入框-->
+															<input type="text" id="num" name="num" size="15" maxlength="25"/>		<!--文本输入框-->
+															<br/>
+															
+															<label for="name">姓名：</label>						<!--用户名标签，关联文本输入框-->
+															<input type="text" id="name" name="name" size="15" maxlength="25"/>		<!--文本输入框-->
+															<br/>
+															
+															<label for="password">密码：</label>
+															<input type="text" id="password" name="password"size="15" maxlength="25"/>		<!--密码输入框-->
+															<br/>
+															
+															<select id="level">
+		                                                		<option value="管理员">管理员</option>
+	                                                			<option value="教师">教师</option>
+		                                            		</select>
+															
+														</fieldset>
+													</div>
+													
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+														</button>
+														<button type="button" class="btn btn-primary" onclick="replace()">
+															提交更改
+														</button>
+													</div>
+												</div><!-- /.modal-content -->
+											</div><!-- /.modal -->
+										</div>
+		                                
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		
+			<!--定义删除按钮-->
+			<script id="tpl" type="text/x-handlebars-template">
+			    {{#each func}}
+			    <button type="button" class="btn btn-{{this.type}} btn-sm" onclick="{{this.fn}}">{{this.name}}</button>
+			    {{/each}}
+			</script>
+			<!--定义修改操作按钮-->
+			<script id="tp2" type="text/x-handlebars-template">
+			    {{#each func}}
+			    <button type="button" class="btn btn-{{this.type}} btn-sm" data-toggle="modal" data-target="#myModal" onclick="{{this.fn}}">{{this.name}}</button>
+			    {{/each}}
+			</script>
+			
+			<script>				
+			    $(function () 
+			    {		
+			    	var table;
+			        /*$('#start_date').datetimepicker();*/	//获取系统时间
+			 		//定义按钮模板
+			        var tpl = $("#tpl").html();
+			        var tp2 = $("#tp2").html();
+			        //预编译模板
+	        		var template = Handlebars.compile(tpl);
+	        		var template2 = Handlebars.compile(tp2);
+	        		$.ajax
+					({
+			      	    url: "http://127.0.0.1:8080/Teacher/SelectTeacher", //加上这句话
+			            type: 'POST',				//请求的类型
+			            async: false,
+			            dataType: "text",			//数据类型
+			            data: {					         		            
+			            },					            
+			            success:function(data) 	 //操作后台的返回值
+			            {
+			            	data = JSON.parse(data);
+			            	table = $('#table').DataTable({	
+						        data: data.body,
+						        retrieve: true,
+						         "columns": 
+						         [
+						            { data: 'tc_id' },
+						            { data: 'tc_name' },
+						            { data: 'tc_password' },
+						            { data: 'tc_level' },
+						            { data: null } //占位空列
+						         ],
+                                "columnDefs": [
+				                {
+				                    "searchable": false,
+				                    "orderable": false,
+				                    "targets": [0.-1]
+				                },
+				                {
+				                    "targets": 4,
+				                    "render": function (a, b, c, d) {
+				                        var context =
+				                        {
+				                            func: [
+//				                                {"name": "修改", "fn": "edit(\'" + c.tc_id + "\',\'" + c.tc_name + "\',\'" + c.tc_password + "\',\'" + c.tc_level + "\')", "type": "primary"},
+				                                {"name": "删除", "fn": "del(\'" + c.tc_id + "\')", "type": "danger"},		//添加按键     name为按键属性
+				                            ]
+				                        };
+				                        var html1 = template(context);
+				                        
+				                        var context2 =
+				                        {
+				                            func: [
+				                                {"name": "修改", "fn": "edit(\'" + c.tc_id + "\',\'" + c.tc_name + "\',\'" + c.tc_password + "\',\'" + c.tc_level + "\')", "type": "primary"},
+//				                                {"name": "删除", "fn": "del(\'" + c.tc_id + "\')", "type": "danger"},		//添加按键     name为按键属性
+				                            ]
+				                        };
+				                        var html2 = template2(context2);
+				                        return html1 + html2;
+				                    }
+				                }]
+					       });
+						}
+				    });
+				})
+			</script>
+			
+		    <!--内嵌的JavaScript程序-->
+			<script>
+				/*初始化datatable*/
+			  /*$(document).ready( 
+				function ()
+				{
+    				$('#table').DataTable();
+    			})*/
+    			var id;
+	      		
+				function del(tc_id) 
+				{	
+					/*alert(typeof tc_id); 查看数据类型*/
+					
+			      	var r = confirm("确定删除?");
+					if (r==true)
+				    {				    	
+				        $.ajax({
+			        		url : "http://127.0.0.1:8080/Teacher/DeleteTeacher",
+			        		type: 'POST',				//请求的类型
+				            async: false,
+				            dataType: "text",			//数据类型
+			                data:
+			                {
+//			                	"name":name
+								"tc_id": tc_id,			//向后台传递数据
+			                },				      				            
+			          		success: function (data) {
+                				location.reload();			//刷新页面
+                				console.log("删除成功" + data);
+                			}
+			          });
+				    }
+			    }
+				
+				function edit(tc_id,tc_name,tc_password,tc_level)
+				{
+					/*console.log(tc_id);*/
+			        editFlag = true;
+			        /*$("#myModal").text("修改");*/
+			        $("#num").val(tc_id);
+			        /*$("#tc_name").val(tc_name).attr("disabled",true);*/
+			        $("#name").val(tc_name);
+			        $("#password").val(tc_password);
+			        $("#level").val(tc_level);
+			        /*$("#myModal").modal("show");*/
+			        id = tc_id;
+				}
+				
+				function replace()
+				{
+					alert("更改老师");					
+					if(!tc_id || !tc_name || !tc_password)
+						alert("请输入完整信息");
+					else
+					{
+						$.ajax
+					    ({
+				      	    url: "http://127.0.0.1:8080/Teacher/UpdateTeacher", //加上这句话
+				            type: 'POST',				//请求的类型
+				            async: false,
+				            dataType: "text",			//数据类型
+				            data: {
+				            	"id":id,
+				                "tc_id": $("#num").val(),	//向后台发送数据，并在后台判断用户名和密码是否正确，正确则返回true
+				                "tc_name": $("#name").val(),
+				                "tc_password": $("#password").val(),
+				                "tc_level": $("#level").val(),			            
+				            },
+				            success:function(data) 	 //操作后台的返回值
+				            {
+				                 if (data==1)           //如果前台返回的是True，执行以下操作
+				                 {
+									alert("成功修改老师信息");
+									location.reload();
+									/*table.reload();*/
+				                }	
+				                 else
+				                 {
+				                 	alert("该用户已存在");
+				                 }
+				            }
+					    })
+					}
+				}
+				
+				function AddTeacher()	//login函数
+				{
+					var tc_id=document.getElementById("tc_id").value;
+					var tc_name=document.getElementById("tc_name").value;	//获取用户名
+					var tc_password=document.getElementById("tc_password").value;	//获取密码
+					var tc_level=document.getElementById("tc_level").value;
+					//向后台发送数据，向后台发送post请求
+					if(!tc_id || !tc_name || !tc_password)
+						alert("请输入完整信息");
+					else
+					{
+						$.ajax
+					    ({
+				      	    url: "http://127.0.0.1:8080/Teacher/AddTeacher", //加上这句话
+				            type: 'POST',				//请求的类型
+				            async: false,
+				            dataType: "text",			//数据类型
+				            data: {
+				                "tc_id": $("#tc_id").val(),	//向后台发送数据，并在后台判断用户名和密码是否正确，正确则返回true
+				                "tc_name": $("#tc_name").val(),
+				                "tc_password": $("#tc_password").val(),
+				                "tc_level": $("#tc_level").val(),			            
+				            },
+				            success:function(data) 	 //操作后台的返回值
+				            {
+				                 if (data==1)           //如果前台返回的是True，执行以下操作
+				                 {
+									alert("添加成功");					//登录成功时跳出提示框
+									location.reload();
+									/*table.reload();*/
+				                }	
+				                 else
+				                 {
+				                 	alert("该用户已存在");
+				                 }
+				            }
+					    })
+					}
+				}
+			</script>   
+		</body>
+	</center>
+</html>
