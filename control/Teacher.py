@@ -229,17 +229,16 @@ class UpdateTeacher:
         tcid = int(params['tc_id'])
         tcname = params['tc_name']
         tcpassword = params['tc_password']
-        tclevel = params['tc_level']
+        #tclevel = params['tc_level']
         id = int(params["id"])
-        print(tcid, tcname, tcpassword, tclevel, id)
+        print(tcid, tcname, tcpassword, id)
         db = pymysql.connect("localhost", port=3306, user="root", passwd="123456", db="examdb", charset='utf8')
         cursor = db.cursor()
         cursor2 = db.cursor()
         sql = '''select * from teacher '''
-        sql2 = '''update teacher set tc_id=%d, tc_name='%s',tc_password='%s',tc_level= '%s' where tc_id = %d''' % \
-                (tcid, tcname, tcpassword, tclevel, id)
-        print("update teacher set tc_id=%d, tc_name='%s',tc_password='%s',tc_level= '%s' where tc_id = %d" % (tcid, tcname, tcpassword, tclevel, id))
-
+        sql2 = '''update teacher set tc_id=%d, tc_name='%s',tc_password='%s' where tc_id = %d''' % \
+                (tcid, tcname, tcpassword,  id)
+        print("update teacher set tc_id=%d, tc_name='%s',tc_password='%s' where tc_id = %d" % (tcid, tcname, tcpassword, id))
 
         try:
             cursor.execute(sql)
@@ -250,7 +249,7 @@ class UpdateTeacher:
                 x = row[0]
                 y = row[1]
                 print(x, y)
-                if x == tcid or y == tcname:
+                if x == tcid and x != id:
                     flag = 0
 
             if flag == 1:
